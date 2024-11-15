@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Stamps</title>
+    <style>
+        html {
+            font-size: 16px;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #4a4a4a);
+            color: white;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        header {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .stamp > div {
+            position: fixed;
+            font-size: 4rem;
+            text-shadow: rgb(187, 187, 187) 1px 0 30px;
+        }
+
+        .skull {
+            position: absolute;
+            font-size: 3rem;
+            transform: translate(-50%, -50%) rotate(0deg);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            opacity: 1;
+            animation: scale-up 0.5s ease-out, fade-out 1s ease 0.5s;
+        }
+
+        @keyframes scale-up {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+            }
+        }
+
+        @keyframes fade-out {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes background-pulse {
+            0%, 100% {
+                background: linear-gradient(135deg, #1a1a1a, #4a4a4a);
+            }
+            50% {
+                background: linear-gradient(135deg, #333333, #666666);
+            }
+        }
+
+        html:active {
+            animation: background-pulse 1s;
+        }
+    </style>
+</head>
+<body>
+    <header>Interactive Stamps</header>
+    <div class="stamp">
+        <div>🔥</div>
+        <div>🔥</div>
+        <div>🔥</div>
+    </div>
+
+    <script>
+        document.addEventListener('click', function(event) {
+            // 새로운 💀 이모지 요소 생성
+            const skull = document.createElement('div');
+            skull.classList.add('skull');
+
+            // 랜덤 이모지 선택
+            skull.textContent = Math.random() < 0.5 ? '💀' : '🗿';
+
+            // 클릭한 위치에 맞게 좌표 설정
+            skull.style.left = `${event.pageX}px`;
+            skull.style.top = `${event.pageY}px`;
+
+            // 랜덤한 크기 설정 (1rem ~ 10rem 사이)
+            const randomSize = Math.random() * 8 + 2;
+            skull.style.fontSize = `${randomSize}rem`;
+
+            // body에 요소 추가
+            document.body.appendChild(skull);
+
+            // 1.5초 후에 💀 이모지 제거
+            setTimeout(() => skull.remove(), 1500);
+        });
+    </script>
+</body>
+</html>
